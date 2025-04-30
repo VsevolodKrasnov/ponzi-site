@@ -308,7 +308,7 @@
                             </div>
                         </div>
                         <div class="mt-6 pt-6 border-t border-gray-800">
-                            <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                            <div class="h-2 bg-gray-8 rounded-full overflow-hidden">
                                 <div class="h-full bg-gradient-to-r from-neon to-neonPurple rounded-full" style="width: 98%;"></div>
                             </div>
                             <div class="flex justify-between text-sm text-gray-400 mt-2">
@@ -339,11 +339,10 @@
             <div class="bg-gray-900 bg-opacity-50 rounded-xl overflow-hidden border border-gray-800">
                 <!-- Table Header -->
                 <div class="table-header grid grid-cols-12 gap-4 px-6 py-3 text-gray-400 text-sm font-medium uppercase tracking-wider">
-                    <div class="col-span-4 md:col-span-3">Coin</div>
-                    <div class="col-span-3 md:col-span-2 text-right">Price</div>
-                    <div class="col-span-3 md:col-span-2 text-right">24h Change</div>
-                    <div class="hidden md:block md:col-span-3 text-right">Volume (24h)</div>
-                    <div class="col-span-2 md:col-span-2 text-right">Votes</div>
+                    <div class="col-span-5 md:col-span-4">Coin</div>
+                    <div class="col-span-3 md:col-span-3 text-right">Price</div>
+                    <div class="col-span-3 md:col-span-3 text-right">24h Change</div>
+                    <div class="col-span-1 md:col-span-2 text-right">Votes</div>
                 </div>
                 
                 <!-- Table Body -->
@@ -668,25 +667,25 @@
     <script>
         // Sample data for ponzi coins with logo images
         const ponziCoins = [
-            { name: "IPLR", symbol: "IPLR", price: "$0.42", change: 15.2, volume: "$1.2M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: true, address: "EyzgnBfHGe9hh169B8993muBVcoeURCnSgPbddBeSybo", votes: 42 },
-            { name: "PZI", symbol: "PZI", price: "$0.69", change: -3.7, volume: "$24.5M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: false, address: "FEwhEXQePdeNvJdFR5vaPWztvwyTwDjhntJZonYw3U2z", votes: 128 },
-            { name: "PRIZE", symbol: "PRIZE", price: "$1.20", change: 120.5, volume: "$8.7M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: true, address: "DBW4topT6adDEvSkHAyTKurDbj9GNoPqch8XW7hBK1b4", votes: 89 },
-            { name: "SOLBO", symbol: "SOLBO", price: "$0.0042", change: -15.3, volume: "$3.8M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: false, address: "FHCfQjRjTBdDgN68hmhKJUioBz9DsNLkUjwFqLs22m7X", votes: 15 },
-            { name: "THIRD", symbol: "THIRD", price: "$0.33", change: 42.0, volume: "$2.1M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: true, address: "CenKoHe7SFVN24QGurDvUZiEsoaXVAtEg3gSJoVqwwrp", votes: 56 },
-            { name: "PARADOX", symbol: "PARADOX", price: "$0.69", change: -7.8, volume: "$1.5M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: false, address: "HzgidbPDq6ot8rAMqb15B8FpF9dLa2Z3UaZVKLGd7XsS", votes: 31 },
-            { name: "LUCKYHOLD", symbol: "LUCKYHOLD", price: "$0.0033", change: 210.5, volume: "$6.9M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: true, address: "9bRbnoEBFQaD5LviNCirLzPEtCH7rPW5dY9e1nqJhjXT", votes: 112 },
-            { name: "SHART", symbol: "SHART", price: "$0.00042", change: -25.3, volume: "$4.2M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: false, address: "2G4RMDbXu79f5Yff6fBjKgXknuGvrFCr7iYmiTKy3fVc", votes: 23 },
-            { name: "BRRR", symbol: "BRRR", price: "$0.042", change: 69.0, volume: "$3.3M", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", positive: true, address: "7dGEYMPsAVxJY3qQJaCHwLPkCCx9SSE52H4k1wF617uE", votes: 78 }
+            { name: "IPLR", symbol: "IPLR", price: "$0.42", change: 15.2, logo: "iplr.web", positive: true, address: "EyzgnBfHGe9hh169B8993muBVcoeURCnSgPbddBeSybo", votes: 42 },
+            { name: "PZI", symbol: "PZI", price: "$0.69", change: -3.7, logo: "pzi.jpg", positive: false, address: "FEwhEXQePdeNvJdFR5vaPWztvwyTwDjhntJZonYw3U2z", votes: 128 },
+            { name: "PRIZE", symbol: "PRIZE", price: "$1.20", change: 120.5, logo: "prize.web", positive: true, address: "DBW4topT6adDEvSkHAyTKurDbj9GNoPqch8XW7hBK1b4", votes: 89 },
+            { name: "SOLBO", symbol: "SOLBO", price: "$0.0042", change: -15.3, logo: "solbo.jpg", positive: false, address: "FHCfQjRjTBdDgN68hmhKJUioBz9DsNLkUjwFqLs22m7X", votes: 15 },
+            { name: "THIRD", symbol: "THIRD", price: "$0.33", change: 42.0, logo: "third.png", positive: true, address: "CenKoHe7SFVN24QGurDvUZiEsoaXVAtEg3gSJoVqwwrp", votes: 56 },
+            { name: "PARADOX", symbol: "PARADOX", price: "$0.69", change: -7.8, logo: "paradox.jpg", positive: false, address: "HzgidbPDq6ot8rAMqb15B8FpF9dLa2Z3UaZVKLGd7XsS", votes: 31 },
+            { name: "LUCKYHOLD", symbol: "LUCKYHOLD", price: "$0.0033", change: 210.5, logo: "luckyhold.jpg", positive: true, address: "9bRbnoEBFQaD5LviNCirLzPEtCH7rPW5dY9e1nqJhjXT", votes: 112 },
+            { name: "SHART", symbol: "SHART", price: "$0.00042", change: -25.3, logo: "shart.jpg", positive: false, address: "2G4RMDbXu79f5Yff6fBjKgXknuGvrFCr7iYmiTKy3fVc", votes: 23 },
+            { name: "BRRR", symbol: "BRRR", price: "$0.042", change: 69.0, logo: "brrr.jpg", positive: true, address: "7dGEYMPsAVxJY3qQJaCHwLPkCCx9SSE52H4k1wF617uE", votes: 78 }
         ];
 
         // Sample data for voting candidates
         const votingCandidates = [
-            { name: "MOONSHOT", symbol: "MOON", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", description: "Next 100x moonshot token with innovative tokenomics", votes: 0 },
-            { name: "PONZINOMICS", symbol: "PONZI", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", description: "The ultimate ponzi experience with auto-compounding rewards", votes: 0 },
-            { name: "RUGPULL", symbol: "RUG", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", description: "Honest rugpull token with transparent dev team", votes: 0 },
-            { name: "BAGHOLDER", symbol: "BAG", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", description: "For those who love holding bags until zero", votes: 0 },
-            { name: "PUMPDUMP", symbol: "PUMP", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", description: "Professional pump and dump team with proven track record", votes: 0 },
-            { name: "WHALEBOT", symbol: "WHALE", logo: "C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg", description: "AI-powered whale bot that frontruns your trades", votes: 0 }
+            { name: "MOONSHOT", symbol: "MOON", logo: "moonshot.png", description: "Next 100x moonshot token with innovative tokenomics", votes: 0 },
+            { name: "PONZINOMICS", symbol: "PONZI", logo: "ponzinomics.png", description: "The ultimate ponzi experience with auto-compounding rewards", votes: 0 },
+            { name: "RUGPULL", symbol: "RUG", logo: "rugpull.png", description: "Honest rugpull token with transparent dev team", votes: 0 },
+            { name: "BAGHOLDER", symbol: "BAG", logo: "bagholder.png", description: "For those who love holding bags until zero", votes: 0 },
+            { name: "PUMPDUMP", symbol: "PUMP", logo: "pumpdump.png", description: "Professional pump and dump team with proven track record", votes: 0 },
+            { name: "WHALEBOT", symbol: "WHALE", logo: "whalebot.png", description: "AI-powered whale bot that frontruns your trades", votes: 0 }
         ];
 
         // Track connected wallet
@@ -703,17 +702,16 @@
                 row.className = 'coin-row grid grid-cols-12 gap-4 px-6 py-4 items-center transition cursor-pointer';
                 
                 row.innerHTML = `
-                    <div class="col-span-4 md:col-span-3 flex items-center">
-                        <img src="${coin.logo}" alt="${coin.name} logo" class="coin-logo">
+                    <div class="col-span-5 md:col-span-4 flex items-center">
+                        <img src="${coin.logo}" alt="${coin.name} Logo" class="coin-logo">
                         <div>
                             <div class="font-medium">${coin.name}</div>
                             <div class="text-gray-400 text-sm">${coin.symbol}</div>
                         </div>
                     </div>
-                    <div class="col-span-3 md:col-span-2 text-right font-mono">${coin.price}</div>
-                    <div class="col-span-3 md:col-span-2 text-right font-mono ${coin.positive ? 'text-green-400' : 'text-red-400'}">${coin.positive ? '+' : ''}${coin.change}%</div>
-                    <div class="hidden md:block md:col-span-3 text-right font-mono">${coin.volume}</div>
-                    <div class="col-span-2 md:col-span-2 text-right font-mono">${coin.votes}</div>
+                    <div class="col-span-3 md:col-span-3 text-right font-mono">${coin.price}</div>
+                    <div class="col-span-3 md:col-span-3 text-right font-mono ${coin.positive ? 'text-green-400' : 'text-red-400'}">${coin.positive ? '+' : ''}${coin.change}%</div>
+                    <div class="col-span-1 md:col-span-2 text-right font-mono">${coin.votes}</div>
                 `;
                 
                 tableBody.appendChild(row);
@@ -731,7 +729,7 @@
                 
                 card.innerHTML = `
                     <div class="flex items-center mb-4">
-                        <img src="${candidate.logo}" alt="${candidate.name} logo" class="w-10 h-10 rounded-full mr-3">
+                        <img src="${candidate.logo}" alt="${candidate.name} Logo" class="w-10 h-10 rounded-full mr-3">
                         <div>
                             <h3 class="font-bold">${candidate.name}</h3>
                             <div class="text-gray-400 text-sm">${candidate.symbol}</div>
