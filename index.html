@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponzi Accelerator | $PAR Token Launch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6e45e2',
+                        secondary: '#88d3ce',
+                        accent: '#ff7e5f',
+                        dark: '#1a1a2e',
+                        darker: '#16213e',
+                        neon: '#00f5d4',
+                        neonPink: '#f15bb5',
+                        neonPurple: '#9b5de5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        gradient: {
+                            '0%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' },
+                            '100%': { 'background-position': '0% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f0f1a;
+            color: #e2e8f0;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533d7b);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        .neon-text {
+            text-shadow: 0 0 5px rgba(0, 245, 212, 0.5), 0 0 10px rgba(0, 245, 212, 0.3);
+        }
+        
+        .neon-border {
+            box-shadow: 0 0 10px rgba(0, 245, 212, 0.5), 0 0 20px rgba(0, 245, 212, 0.3);
+        }
+        
+        .coin-row:hover {
+            background: rgba(30, 41, 59, 0.5);
+            transform: scale(1.01);
+            transition: all 0.2s ease;
+        }
+        
+        .connect-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .connect-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 245, 212, 0.4);
+        }
+        
+        .stake-card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(136, 211, 206, 0.2);
+        }
+        
+        .partner-logo {
+            filter: grayscale(100%) brightness(0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .partner-logo:hover {
+            filter: grayscale(0%) brightness(1);
+            transform: scale(1.05);
+        }
+        
+        .scroll-down {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* TradingView-like table styles */
+        .table-header {
+            background: rgba(30, 41, 59, 0.8);
+            border-bottom: 1px solid rgba(74, 85, 104, 0.5);
+        }
+        
+        .positive {
+            color: #10b981;
+        }
+        
+        .negative {
+            color: #ef4444;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(30, 41, 59, 0.5);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(136, 211, 206, 0.5);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(136, 211, 206, 0.8);
+        }
+        
+        /* Animated background elements */
+        .bg-blur-circle {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(106, 72, 226, 0.2) 0%, rgba(106, 72, 226, 0) 70%);
+            filter: blur(40px);
+            z-index: -1;
+        }
+
+        /* Navbar menu items */
+        .nav-item {
+            position: relative;
+            padding: 8px 12px;
+        }
+
+        .nav-item:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #00f5d4;
+            transition: width 0.3s ease;
+        }
+
+        .nav-item:hover:after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen">
+    <!-- Animated background elements -->
+    <div class="bg-blur-circle top-0 left-0 animate-pulse-slow"></div>
+    <div class="bg-blur-circle bottom-0 right-0 animate-pulse-slow" style="background: radial-gradient(circle, rgba(0, 245, 212, 0.2) 0%, rgba(0, 245, 212, 0) 70%);"></div>
+    
+    <!-- Header/Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-opacity-80 bg-darker border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-neon to-neonPurple flex items-center justify-center">
+                    <i class="fas fa-chart-line text-white text-lg"></i>
+                </div>
+                <h1 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">
+                    Ponzi<span class="font-normal">Accelerator</span>
+                </h1>
+            </div>
+            
+            <div class="hidden md:flex space-x-2">
+                <a href="#leaderboard" class="nav-item text-gray-300 hover:text-neon transition">Leaderboard</a>
+                <a href="#staking" class="nav-item text-gray-300 hover:text-neon transition">Staking</a>
+                <a href="#partners" class="nav-item text-gray-300 hover:text-neon transition">Partners</a>
+                <a href="#early-access" class="nav-item text-gray-300 hover:text-neon transition">Early Access</a>
+            </div>
+            
+            <div class="flex space-x-2">
+                <button id="connectWallet" class="connect-btn px-4 py-2 rounded-full bg-gradient-to-r from-primary to-neonPurple text-white font-medium text-sm flex items-center space-x-2">
+                    <i class="fas fa-wallet"></i>
+                    <span>Connect Wallet</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-20 pb-32 px-4">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 neon-text">
+                    Accelerate Your Ponzi Coin with <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">$PAR Token</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-lg">
+                    $PAR token launching soon! Be part of the next generation ponzi coin accelerator. 
+                    Join our community and get early access to exclusive opportunities.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#early-access" class="px-6 py-3 rounded-full bg-gradient-to-r from-neon to-neonPurple text-dark font-bold hover:shadow-lg hover:shadow-neon/30 transition">
+                        Get Early Access
+                    </a>
+                    <a href="#leaderboard" class="px-6 py-3 rounded-full border-2 border-neon text-neon font-bold hover:bg-neon/10 transition">
+                        Explore Coins
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative w-full max-w-md">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-neonPurple to-neon rounded-xl blur-lg opacity-50 animate-pulse"></div>
+                    <div class="relative bg-darker rounded-xl p-6 shadow-2xl border border-gray-800">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold">$PAR Token</h3>
+                            <span class="px-3 py-1 bg-neon/10 text-neon rounded-full text-sm font-medium">COMING SOON</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Token Name</span>
+                                <span class="font-mono">Ponzi Accelerator</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Symbol</span>
+                                <span class="font-mono">$PAR</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Network</span>
+                                <span class="font-mono">Solana</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Total Supply</span>
+                                <span class="font-mono">1,000,000,000</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-6 border-t border-gray-800">
+                            <div class="h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-neon to-neonPurple rounded-full" style="width: 15%;"></div>
+                            </div>
+                            <div class="flex justify-between text-sm text-gray-400 mt-2">
+                                <span>Launch Progress</span>
+                                <span>15%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-down">
+            <a href="#leaderboard" class="text-gray-400 hover:text-neon transition">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="py-16 px-4 bg-darker bg-opacity-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-text">Meme Coin <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">Leaderboard</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Top performing meme coins in the Ponzi Accelerator ecosystem. Data updates in real-time.</p>
+            </div>
+            
+            <div class="bg-gray-900 bg-opacity-50 rounded-xl overflow-hidden border border-gray-800">
+                <!-- Table Header -->
+                <div class="table-header grid grid-cols-12 gap-4 px-6 py-3 text-gray-400 text-sm font-medium uppercase tracking-wider">
+                    <div class="col-span-4 md:col-span-3">Coin</div>
+                    <div class="col-span-3 md:col-span-2 text-right">Price</div>
+                    <div class="col-span-3 md:col-span-2 text-right">24h Change</div>
+                    <div class="hidden md:block md:col-span-3 text-right">Volume (24h)</div>
+                    <div class="col-span-2 md:col-span-2 text-right">Action</div>
+                </div>
+                
+                <!-- Table Body -->
+                <div id="coinTableBody" class="divide-y divide-gray-800">
+                    <!-- Rows will be populated by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="mt-6 flex justify-center">
+                <button id="loadMore" class="px-6 py-2 rounded-full border border-neon text-neon hover:bg-neon/10 transition">
+                    Load More
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Staking Section -->
+    <section id="staking" class="py-16 px-4">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto">
+                <div class="stake-card rounded-xl p-8 md:p-10 shadow-xl">
+                    <div class="flex flex-col md:flex-row items-center">
+                        <div class="md:w-1/2 mb-8 md:mb-0">
+                            <h2 class="text-3xl font-bold mb-4 neon-text">Stake <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">$PAR Tokens</span></h2>
+                            <p class="text-gray-300 mb-6">
+                                Prepare for $PAR token launch by joining our staking waitlist. Early participants will receive exclusive benefits.
+                            </p>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-neon mr-2"></i>
+                                    <span class="text-gray-300">Priority access to token sale</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-neon mr-2"></i>
+                                    <span class="text-gray-300">Higher APY for early stakers</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-neon mr-2"></i>
+                                    <span class="text-gray-300">Governance voting rights</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-10">
+                            <div class="bg-gray-900 bg-opacity-50 rounded-xl p-6 border border-gray-800">
+                                <h3 class="text-xl font-bold mb-4 text-center">Join Waitlist</h3>
+                                <form class="space-y-4">
+                                    <div>
+                                        <label class="block text-gray-400 mb-2">Email Address</label>
+                                        <input type="email" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon" placeholder="your@email.com">
+                                    </div>
+                                    <div>
+                                        <label class="block text-gray-400 mb-2">Expected Stake Amount</label>
+                                        <select class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon">
+                                            <option>Under $1,000</option>
+                                            <option>$1,000 - $5,000</option>
+                                            <option>$5,000 - $10,000</option>
+                                            <option selected>Over $10,000</option>
+                                        </select>
+                                    </div>
+                                    <div class="pt-2">
+                                        <button type="submit" class="w-full mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon to-neonPurple text-dark font-bold hover:shadow-lg hover:shadow-neon/30 transition">
+                                            Join Waitlist
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section id="partners" class="py-16 px-4 bg-darker bg-opacity-50">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 neon-text">Our <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">Partners</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">First partnerships will be announced soon. Stay tuned for exciting collaborations!</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-8 items-center justify-center">
+                <div class="flex justify-center items-center h-32">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2 text-gray-500">?</div>
+                        <div class="text-gray-400">Coming Soon</div>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center h-32">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2 text-gray-500">?</div>
+                        <div class="text-gray-400">Coming Soon</div>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center h-32">
+                    <div class="text-center">
+                        <div class="text-4xl mb-2 text-gray-500">?</div>
+                        <div class="text-gray-400">Coming Soon</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-16 text-center">
+                <h3 class="text-2xl font-bold mb-4">Apply for Grant</h3>
+                <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+                    Have a promising meme coin project? Apply for our accelerator program and receive funding, marketing support, and technical guidance.
+                </p>
+                <button id="applyGrant" class="px-8 py-3 rounded-full bg-gradient-to-r from-neonPurple to-neonPink text-white font-bold hover:shadow-lg hover:shadow-purple-500/30 transition">
+                    Apply Now
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Early Access Section -->
+    <section id="early-access" class="py-16 px-4">
+        <div class="container mx-auto max-w-4xl">
+            <div class="bg-gradient-to-br from-darker to-gray-900 rounded-xl p-8 md:p-10 border border-gray-800 shadow-xl">
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <h2 class="text-3xl font-bold mb-4 neon-text">Get <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">Early Access</span></h2>
+                        <p class="text-gray-300 mb-6">
+                            Join our exclusive early bird program to get priority access to $PAR token and upcoming meme coin launches.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-gem text-neonPurple mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-200">Whitelist Spots</h4>
+                                    <p class="text-gray-400 text-sm">Guaranteed allocation in $PAR token sale</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-chart-line text-neon mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-200">Premium Analytics</h4>
+                                    <p class="text-gray-400 text-sm">Access to our proprietary trading signals</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <i class="fas fa-users text-neonPink mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-200">Private Community</h4>
+                                    <p class="text-gray-400 text-sm">Connect with other serious investors</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2">
+                        <div class="bg-gray-900 bg-opacity-50 rounded-xl p-6 border border-gray-800">
+                            <h3 class="text-xl font-bold mb-4 text-center">Join Early Access</h3>
+                            <form id="earlyAccessForm" class="space-y-4">
+                                <div>
+                                    <label class="block text-gray-400 mb-2">Email Address</label>
+                                    <input type="email" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon" placeholder="your@email.com">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-400 mb-2">Wallet Address</label>
+                                    <input type="text" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon" placeholder="0x... or Solana address">
+                                </div>
+                                <div>
+                                    <label class="block text-gray-400 mb-2">Social Proof</label>
+                                    <select class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon">
+                                        <option value="">How did you hear about us?</option>
+                                        <option>Twitter</option>
+                                        <option>DexScreener</option>
+                                        <option>Telegram</option>
+                                        <option>Other</option>
+                                    </select>
+                                </div>
+                                <div class="pt-2">
+                                    <button type="submit" class="w-full mt-2 px-6 py-3 rounded-full bg-gradient-to-r from-neon to-neonPurple text-dark font-bold hover:shadow-lg hover:shadow-neon/30 transition">
+                                        Register Now
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12 px-4 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-neon to-neonPurple flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-sm"></i>
+                        </div>
+                        <h3 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">
+                            PonziAccelerator
+                        </h3>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        The premier launchpad for high-potential meme coins. Accelerating your crypto journey with $PAR token.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-200 mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#leaderboard" class="text-gray-400 hover:text-neon transition">Leaderboard</a></li>
+                        <li><a href="#staking" class="text-gray-400 hover:text-neon transition">Staking</a></li>
+                        <li><a href="#partners" class="text-gray-400 hover:text-neon transition">Partners</a></li>
+                        <li><a href="#early-access" class="text-gray-400 hover:text-neon transition">Early Access</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-200 mb-4">Resources</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-neon transition">Whitepaper</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neon transition">Documentation</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neon transition">Blog</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-neon transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold text-gray-200 mb-4">Connect</h4>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
+                            <i class="fas fa-chart-line"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                    </div>
+                    <p class="text-gray-400 text-sm">
+                        For partnerships: <a href="mailto:partners@ponziaccelerator.com" class="text-neon hover:underline">partners@ponziaccelerator.com</a>
+                    </p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Ponzi Accelerator. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-gray-400 text-sm">Terms</a>
+                    <a href="#" class="text-gray-500 hover:text-gray-400 text-sm">Privacy</a>
+                    <a href="#" class="text-gray-500 hover:text-gray-400 text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="grantModal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 hidden">
+        <div class="bg-darker rounded-xl p-8 max-w-md w-full mx-4 border border-gray-800 shadow-2xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold">Apply for Grant</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="grantForm" class="space-y-4">
+                <div>
+                    <label class="block text-gray-400 mb-2">Project Name</label>
+                    <input type="text" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon">
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-2">Blockchain</label>
+                    <select class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon">
+                        <option>Ethereum</option>
+                        <option>Solana</option>
+                        <option>Polygon</option>
+                        <option>BNB Chain</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-2">Project Description</label>
+                    <textarea rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon"></textarea>
+                </div>
+                <div>
+                    <label class="block text-gray-400 mb-2">Social Links</label>
+                    <input type="text" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-neon" placeholder="Twitter, Telegram, etc.">
+                </div>
+                <button type="submit" class="w-full mt-4 px-6 py-3 rounded-full bg-gradient-to-r from-neonPurple to-neonPink text-white font-bold hover:shadow-lg hover:shadow-purple-500/30 transition">
+                    Submit Application
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed bottom-4 right-4 bg-gray-800 text-white px-6 py-3 rounded-lg shadow-lg flex items-center hidden">
+        <span id="notificationText" class="mr-4">Notification message here</span>
+        <button id="closeNotification" class="text-gray-400 hover:text-white">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <script>
+        // Sample data for meme coins
+        const memeCoins = [
+            { name: "Doge Killer", symbol: "LEASH", price: "$42.69", change: 15.2, volume: "$1.2M", logo: "doge", positive: true },
+            { name: "Shiba Inu", symbol: "SHIB", price: "$0.000012", change: -3.7, volume: "$24.5M", logo: "shiba", positive: false },
+            { name: "Pepe", symbol: "PEPE", price: "$0.00000042", change: 120.5, volume: "$8.7M", logo: "pepe", positive: true },
+            { name: "Floki", symbol: "FLOKI", price: "$0.000032", change: 8.9, volume: "$5.3M", logo: "floki", positive: true },
+            { name: "Bonk", symbol: "BONK", price: "$0.0000012", change: -15.3, volume: "$3.8M", logo: "bonk", positive: false },
+            { name: "Wojak", symbol: "WOJAK", price: "$0.0042", change: 42.0, volume: "$2.1M", logo: "wojak", positive: true },
+            { name: "HarryPotterObamaSonic10Inu", symbol: "BITCOIN", price: "$0.69", change: -7.8, volume: "$1.5M", logo: "hp", positive: false },
+            { name: "Turbo", symbol: "TURBO", price: "$0.0033", change: 210.5, volume: "$6.9M", logo: "turbo", positive: true },
+        ];
+
+        // Function to populate the coin table
+        function populateCoinTable() {
+            const tableBody = document.getElementById('coinTableBody');
+            tableBody.innerHTML = '';
+            
+            memeCoins.forEach(coin => {
+                const row = document.createElement('div');
+                row.className = 'coin-row grid grid-cols-12 gap-4 px-6 py-4 items-center transition cursor-pointer';
+                
+                row.innerHTML = `
+                    <div class="col-span-4 md:col-span-3 flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-gray-800 flex items-center justify-center mr-3">
+                            <i class="fas fa-coins text-${coin.logo === 'doge' ? 'yellow-400' : coin.logo === 'shiba' ? 'orange-500' : coin.logo === 'pepe' ? 'green-500' : coin.logo === 'floki' ? 'red-400' : coin.logo === 'bonk' ? 'pink-400' : coin.logo === 'wojak' ? 'blue-400' : coin.logo === 'hp' ? 'purple-400' : 'neon'}"></i>
+                        </div>
+                        <div>
+                            <div class="font-medium">${coin.name}</div>
+                            <div class="text-gray-400 text-sm">${coin.symbol}</div>
+                        </div>
+                    </div>
+                    <div class="col-span-3 md:col-span-2 text-right font-mono">${coin.price}</div>
+                    <div class="col-span-3 md:col-span-2 text-right font-mono ${coin.positive ? 'text-green-400' : 'text-red-400'}">${coin.positive ? '+' : ''}${coin.change}%</div>
+                    <div class="hidden md:block md:col-span-3 text-right font-mono">${coin.volume}</div>
+                    <div class="col-span-2 md:col-span-2 text-right">
+                        <button class="px-3 py-1 rounded-full text-xs font-medium ${coin.positive ? 'bg-green-900/30 text-green-400' : 'bg-red-900/30 text-red-400'}">Trade</button>
+                    </div>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Function to show notification
+        function showNotification(message, isSuccess = true) {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            
+            notificationText.textContent = message;
+            notification.className = `fixed bottom-4 right-4 ${isSuccess ? 'bg-green-900/80' : 'bg-red-900/80'} text-white px-6 py-3 rounded-lg shadow-lg flex items-center`;
+            notification.classList.remove('hidden');
+            
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Function to handle wallet connection
+        async function connectWallet() {
+            try {
+                if (typeof window.ethereum !== 'undefined') {
+                    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    showNotification(`Connected with wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`);
+                } else if (typeof window.solana !== 'undefined') {
+                    const response = await window.solana.connect();
+                    const publicKey = response.publicKey.toString();
+                    showNotification(`Connected with wallet: ${publicKey.slice(0, 6)}...${publicKey.slice(-4)}`);
+                } else {
+                    showNotification('No wallet extension detected!', false);
+                }
+            } catch (error) {
+                showNotification(`Connection failed: ${error.message}`, false);
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            populateCoinTable();
+            
+            // Wallet connection
+            document.getElementById('connectWallet').addEventListener('click', connectWallet);
+            
+            // Grant application modal
+            const grantModal = document.getElementById('grantModal');
+            const applyGrantBtn = document.getElementById('applyGrant');
+            const closeModalBtn = document.getElementById('closeModal');
+            
+            applyGrantBtn.addEventListener('click', () => {
+                grantModal.classList.remove('hidden');
+            });
+            
+            closeModalBtn.addEventListener('click', () => {
+                grantModal.classList.add('hidden');
+            });
+            
+            // Close modal when clicking outside
+            grantModal.addEventListener('click', (e) => {
+                if (e.target === grantModal) {
+                    grantModal.classList.add('hidden');
+                }
+            });
+            
+            // Grant form submission
+            document.getElementById('grantForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                showNotification('Grant application submitted successfully!');
+                grantModal.classList.add('hidden');
+                e.target.reset();
+            });
+            
+            // Early access form submission
+            document.getElementById('earlyAccessForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                showNotification('Early access request received! We\'ll contact you soon.');
+                e.target.reset();
+            });
+            
+            // Load more coins
+            document.getElementById('loadMore').addEventListener('click', () => {
+                // In a real app, this would fetch more data from an API
+                showNotification('Loading more coins...');
+            });
+            
+            // Close notification
+            document.getElementById('closeNotification').addEventListener('click', () => {
+                document.getElementById('notification').classList.add('hidden');
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
