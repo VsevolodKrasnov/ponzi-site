@@ -15,7 +15,7 @@
                         secondary: '#88d3ce',
                         accent: '#ff7e5f',
                         dark: '#1a1a2e',
-                        darker: '#16213e',
+                        darker: '#0f172a', // Dark blue background
                         neon: '#00f5d4',
                         neonPink: '#f15bb5',
                         neonPurple: '#9b5de5',
@@ -50,15 +50,9 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f1a;
+            background-color: #0f172a; /* Dark blue background */
             color: #e2e8f0;
             scroll-behavior: smooth;
-        }
-        
-        .gradient-bg {
-            background: linear-gradient(-45deg, #1a1a2e, #16213e, #0f3460, #533d7b);
-            background-size: 400% 400%;
-            animation: gradient 15s ease infinite;
         }
         
         .neon-text {
@@ -104,7 +98,6 @@
             animation: float 3s ease-in-out infinite;
         }
         
-        /* TradingView-like table styles */
         .table-header {
             background: rgba(30, 41, 59, 0.8);
             border-bottom: 1px solid rgba(74, 85, 104, 0.5);
@@ -118,7 +111,6 @@
             color: #ef4444;
         }
         
-        /* Custom scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -137,7 +129,6 @@
             background: rgba(136, 211, 206, 0.8);
         }
         
-        /* Animated background elements */
         .bg-blur-circle {
             position: absolute;
             width: 300px;
@@ -148,7 +139,6 @@
             z-index: -1;
         }
 
-        /* Navbar menu items */
         .nav-item {
             position: relative;
             padding: 8px 12px;
@@ -169,7 +159,6 @@
             width: 100%;
         }
         
-        /* Logo styling */
         .logo-container {
             display: flex;
             align-items: center;
@@ -194,7 +183,6 @@
             -webkit-text-fill-color: transparent;
         }
         
-        /* Coin logos */
         .coin-logo {
             width: 32px;
             height: 32px;
@@ -203,7 +191,6 @@
             margin-right: 12px;
         }
         
-        /* Vote button */
         .vote-btn {
             transition: all 0.2s ease;
         }
@@ -217,20 +204,82 @@
             color: white;
         }
         
-        /* Connected wallet button */
         .connected-btn {
             background: linear-gradient(to right, #10b981, #3b82f6);
             color: white;
         }
         
-        /* Disabled state */
         .disabled {
             opacity: 0.5;
             pointer-events: none;
         }
+
+        /* Airdrop specific styles */
+        .airdrop-progress {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .airdrop-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #6e45e2, #88d3ce);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .airdrop-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .airdrop-status.eligible {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+        }
+
+        .airdrop-status.claimed {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .airdrop-status.not-eligible {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+        }
+
+        .claim-btn {
+            background: linear-gradient(90deg, #6e45e2, #88d3ce);
+            color: white;
+            font-weight: 600;
+            padding: 10px 24px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .claim-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .claim-btn:active {
+            transform: translateY(0);
+        }
+
+        .wallet-address {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.875rem;
+            color: #94a3b8;
+        }
     </style>
 </head>
-<body class="gradient-bg min-h-screen">
+<body class="min-h-screen">
     <!-- Animated background elements -->
     <div class="bg-blur-circle top-0 left-0 animate-pulse-slow"></div>
     <div class="bg-blur-circle bottom-0 right-0 animate-pulse-slow" style="background: radial-gradient(circle, rgba(0, 245, 212, 0.2) 0%, rgba(0, 245, 212, 0) 70%);"></div>
@@ -246,6 +295,7 @@
             </div>
             
             <div class="hidden md:flex space-x-2">
+                <a href="#airdrop" class="nav-item text-gray-300 hover:text-neon transition">Airdrop</a>
                 <a href="#leaderboard" class="nav-item text-gray-300 hover:text-neon transition">Leaderboard</a>
                 <a href="#staking" class="nav-item text-gray-300 hover:text-neon transition">Staking</a>
                 <a href="#partners" class="nav-item text-gray-300 hover:text-neon transition">Partners</a>
@@ -261,70 +311,168 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative pt-20 pb-32 px-4">
-        <div class="container mx-auto flex flex-col md:flex-row items-center">
-            <div class="md:w-1/2 mb-12 md:mb-0">
-                <h2 class="text-4xl md:text-6xl font-bold mb-6 neon-text">
-                    Accelerate Your Ponzi Coin with <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">$PAR Token</span>
-                </h2>
-                <p class="text-xl text-gray-300 mb-8 max-w-lg">
-                    $PAR token launching soon! Be part of the next generation ponzi coin accelerator. 
-                    Join our community and get early access to exclusive opportunities.
-                </p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#early-access" class="px-6 py-3 rounded-full bg-gradient-to-r from-neon to-neonPurple text-dark font-bold hover:shadow-lg hover:shadow-neon/30 transition">
-                        Get Early Access
-                    </a>
-                    <a href="#leaderboard" class="px-6 py-3 rounded-full border-2 border-neon text-neon font-bold hover:bg-neon/10 transition">
-                        Explore Coins
-                    </a>
+    <!-- Airdrop Section -->
+    <section id="airdrop" class="py-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="bg-darker rounded-xl p-8 border border-gray-800 shadow-xl">
+                <div class="text-center mb-10">
+                    <h2 class="text-4xl font-bold mb-4 neon-text">Claim Your <span class="bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">$PAR Airdrop</span></h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto">1,000,000 $PAR tokens allocated for early supporters</p>
                 </div>
-            </div>
-            <div class="md:w-1/2 flex justify-center">
-                <div class="relative w-full max-w-md">
-                    <div class="absolute -inset-4 bg-gradient-to-r from-neonPurple to-neon rounded-xl blur-lg opacity-50 animate-pulse"></div>
-                    <div class="relative bg-darker rounded-xl p-6 shadow-2xl border border-gray-800">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-xl font-bold">$PAR Token</h3>
-                            <span class="px-3 py-1 bg-neon/10 text-neon rounded-full text-sm font-medium">COMING SOON</span>
+
+                <!-- Airdrop Stats -->
+                <div class="bg-gray-900 bg-opacity-50 rounded-xl p-6 mb-8 border border-gray-800">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-neon">1,000,000</div>
+                            <div class="text-gray-400">Total Airdrop</div>
                         </div>
-                        <div class="space-y-4">
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Token Name</span>
-                                <span class="font-mono">Ponzi Accelerator</span>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-green-400">374,618.92</div>
+                            <div class="text-gray-400">Already Claimed</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-bold text-blue-400">625,381.08</div>
+                            <div class="text-gray-400">Remaining</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <div class="flex justify-between text-sm text-gray-400 mb-2">
+                            <span>Progress</span>
+                            <span>37.46% claimed</span>
+                        </div>
+                        <div class="airdrop-progress">
+                            <div class="airdrop-progress-bar" style="width: 37.46%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Airdrop Claim Card -->
+                <div class="bg-gray-900 bg-opacity-50 rounded-xl p-8 border border-gray-800 mb-10">
+                    <div id="airdropNotConnected" class="text-center">
+                        <i class="fas fa-wallet text-5xl text-gray-600 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-300 mb-2">Connect Your Wallet</h3>
+                        <p class="text-gray-500 mb-6">Connect your MetaMask or Phantom wallet to check your airdrop eligibility</p>
+                        <button id="connectForAirdrop" class="px-8 py-3 rounded-full bg-gradient-to-r from-neon to-neonPurple text-dark font-bold hover:shadow-lg hover:shadow-neon/30 transition">
+                            Connect Wallet
+                        </button>
+                    </div>
+
+                    <div id="airdropConnected" class="hidden">
+                        <div class="flex flex-col md:flex-row items-center justify-between mb-8">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-300 mb-2">Your Wallet</h3>
+                                <div id="connectedWalletAddress" class="wallet-address">0x0000...0000</div>
                             </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Symbol</span>
-                                <span class="font-mono">$PAR</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Network</span>
-                                <span class="font-mono">Solana</span>
-                            </div>
-                            <div class="flex justify-between">
-                                <span class="text-gray-400">Total Supply</span>
-                                <span class="font-mono">1,000,000,000</span>
+                            <div id="airdropStatus" class="mt-4 md:mt-0">
+                                <span class="airdrop-status not-eligible">
+                                    <i class="fas fa-times-circle mr-2"></i> Not Eligible
+                                </span>
                             </div>
                         </div>
-                        <div class="mt-6 pt-6 border-t border-gray-800">
-                            <div class="h-2 bg-gray-8 rounded-full overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-neon to-neonPurple rounded-full" style="width: 98%;"></div>
+
+                        <div id="airdropEligible" class="hidden">
+                            <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+                                <div class="flex justify-between items-center mb-4">
+                                    <div>
+                                        <h4 class="font-bold text-gray-300">Your Allocation</h4>
+                                        <p class="text-gray-400 text-sm">Amount of $PAR tokens you can claim</p>
+                                    </div>
+                                    <div class="text-2xl font-bold text-neon">20,000.00 $PAR</div>
+                                </div>
                             </div>
-                            <div class="flex justify-between text-sm text-gray-400 mt-2">
-                                <span>Launch Progress</span>
-                                <span>98%</span>
+
+                            <button id="claimAirdropBtn" class="w-full claim-btn">
+                                <i class="fas fa-gift mr-2"></i> Claim Tokens
+                            </button>
+                        </div>
+
+                        <div id="airdropClaimed" class="hidden text-center py-8">
+                            <i class="fas fa-check-circle text-5xl text-green-400 mb-4"></i>
+                            <h3 class="text-2xl font-bold text-gray-300 mb-2">Airdrop Claimed!</h3>
+                            <p class="text-gray-400 mb-4">You've successfully claimed your 20,000.00 $PAR tokens</p>
+                            <div class="text-sm text-gray-500">
+                                Transaction: <span class="wallet-address">0x3aD9...2f7b</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Airdrop Recipients Table -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-300 mb-4">Recent Airdrop Claims</h3>
+                    <div class="bg-gray-900 bg-opacity-50 rounded-xl overflow-hidden border border-gray-800">
+                        <div class="table-header grid grid-cols-2 px-6 py-3 text-gray-400 text-sm font-medium uppercase tracking-wider">
+                            <div>Wallet Address</div>
+                            <div class="text-right">Amount Claimed</div>
+                        </div>
+                        
+                        <div class="divide-y divide-gray-800 max-h-96 overflow-y-auto">
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x3aD9...2f7b</div>
+                                <div class="text-right font-mono text-green-400">20,000.13 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x77b2...AE91</div>
+                                <div class="text-right font-mono text-green-400">18,509.32 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x93C4...fA29</div>
+                                <div class="text-right font-mono text-green-400">24,184.09 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0xF12c...0e00</div>
+                                <div class="text-right font-mono text-green-400">17,621.87 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x61e1...D554</div>
+                                <div class="text-right font-mono text-green-400">19,892.45 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x9Bc4...7A4A</div>
+                                <div class="text-right font-mono text-green-400">22,613.14 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0xCd90...C38e</div>
+                                <div class="text-right font-mono text-green-400">20,927.03 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x0f17...3D1C</div>
+                                <div class="text-right font-mono text-green-400">16,788.10 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x86Ef...3E51</div>
+                                <div class="text-right font-mono text-green-400">25,921.77 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x7198...Aa02</div>
+                                <div class="text-right font-mono text-green-400">18,492.63 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0xA34d...109a</div>
+                                <div class="text-right font-mono text-green-400">13,714.29 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x41Ec...4c00</div>
+                                <div class="text-right font-mono text-green-400">14,801.00 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x8EbC...76e5</div>
+                                <div class="text-right font-mono text-green-400">15,213.92 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x7F22...b312</div>
+                                <div class="text-right font-mono text-green-400">21,004.57 $PAR</div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 px-6 py-4 items-center">
+                                <div class="wallet-address">0x93a0...62E7</div>
+                                <div class="text-right font-mono text-green-400">14,198.41 $PAR</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-down">
-            <a href="#leaderboard" class="text-gray-400 hover:text-neon transition">
-                <i class="fas fa-chevron-down text-2xl"></i>
-            </a>
         </div>
     </section>
 
@@ -560,10 +708,10 @@
                 <div>
                     <div class="flex items-center space-x-2 mb-4">
                         <div class="w-8 h-8 rounded-full bg-gradient-to-br from-neon to-neonPurple flex items-center justify-center">
-                            <img src="ponzilogo.jpg" alt="PonziAccelerator Logo" class="w-full h-full rounded-full object-cover">
+                            <img src="C:\Users\Asus VivoBook\Desktop\ponzi\photo_2025-04-30_09-43-32.jpg" alt="PonziAccelerator Logo" class="w-full h-full rounded-full object-cover">
                         </div>
                         <h3 class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-neon to-neonPurple">
-                            Ponzi Accelerator
+                            PonziAccelerator
                         </h3>
                     </div>
                     <p class="text-gray-400 text-sm">
@@ -573,6 +721,7 @@
                 <div>
                     <h4 class="text-lg font-bold text-gray-200 mb-4">Quick Links</h4>
                     <ul class="space-y-2">
+                        <li><a href="#airdrop" class="text-gray-400 hover:text-neon transition">Airdrop</a></li>
                         <li><a href="#leaderboard" class="text-gray-400 hover:text-neon transition">Leaderboard</a></li>
                         <li><a href="#staking" class="text-gray-400 hover:text-neon transition">Staking</a></li>
                         <li><a href="#partners" class="text-gray-400 hover:text-neon transition">Partners</a></li>
@@ -590,13 +739,13 @@
                 <div>
                     <h4 class="text-lg font-bold text-gray-200 mb-4">Connect</h4>
                     <div class="flex space-x-4 mb-4">
-                        <a href="https://x.com/paraccelerator?s=21" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
+                        <a href="https://x.com/gorkrewards?s=21" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
                             <i class="fab fa-twitter"></i>
                         </a>
                         <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
                             <i class="fas fa-chart-line"></i>
                         </a>
-                        <a href="https://t.me/+5_4GCoepznhlYTU5" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
+                        <a href="https://t.me/+_KWAIfC63GA5MTYx" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
                             <i class="fab fa-telegram"></i>
                         </a>
                         <a href="https://ponziaccelerator.gitbook.io/ponziaccelerator" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center text-gray-400 hover:text-neon hover:bg-gray-700 transition">
@@ -666,32 +815,75 @@
 
     <script>
         // Sample data for ponzi coins with logo images
-      const ponziCoins = [
+        const ponziCoins = [
   { name: "IPLR", symbol: "IPLR", price: "$0.42", change: 15.2, logo: "iplr.webp", positive: true, address: "EyzgnBfHGe9hh169B8993muBVcoeURCnSgPbddBeSybo", votes: 42 },
   { name: "PZI", symbol: "PZI", price: "$0.69", change: -3.7, logo: "pzi.jpg", positive: false, address: "FEwhEXQePdeNvJdFR5vaPWztvwyTwDjhntJZonYw3U2z", votes: 128 },
   { name: "PRIZE", symbol: "PRIZE", price: "$1.20", change: 120.5, logo: "prize.webp", positive: true, address: "DBW4topT6adDEvSkHAyTKurDbj9GNoPqch8XW7hBK1b4", votes: 89 },
-  { name: "SOLBO", symbol: "SOLBO", price: "$0.0042", change: -15.3, logo: "solbo.mp4", positive: false, address: "FHCfQjRjTBdDgN68hmhKJUioBz9DsNLkUjwFqLs22m7X", votes: 15 },
-  { name: "THIRD", symbol: "THIRD", price: "$0.33", change: 42.0, logo: "third.jpg", positive: true, address: "CenKoHe7SFVN24QGurDvUZiEsoaXVAtEg3gSJoVqwwrp", votes: 56 },
+  { name: "SOLBO", symbol: "SOLBO", price: "$0.0042", change: -15.3, logo: "solbo.jpg", positive: false, address: "FHCfQjRjTBdDgN68hmhKJUioBz9DsNLkUjwFqLs22m7X", votes: 15 },
+  { name: "THIRD", symbol: "THIRD", price: "$0.33", change: 42.0, logo: "third.png", positive: true, address: "CenKoHe7SFVN24QGurDvUZiEsoaXVAtEg3gSJoVqwwrp", votes: 56 },
   { name: "PARADOX", symbol: "PARADOX", price: "$0.69", change: -7.8, logo: "paradox.jpg", positive: false, address: "HzgidbPDq6ot8rAMqb15B8FpF9dLa2Z3UaZVKLGd7XsS", votes: 31 },
   { name: "LUCKYHOLD", symbol: "LUCKYHOLD", price: "$0.0033", change: 210.5, logo: "luckyhold.jpg", positive: true, address: "9bRbnoEBFQaD5LviNCirLzPEtCH7rPW5dY9e1nqJhjXT", votes: 112 },
-  { name: "SHART", symbol: "SHART", price: "$0.00042", change: -25.3, logo: "shart.jpeg", positive: false, address: "2G4RMDbXu79f5Yff6fBjKgXknuGvrFCr7iYmiTKy3fVc", votes: 23 },
+  { name: "SHART", symbol: "SHART", price: "$0.00042", change: -25.3, logo: "shart.jpg", positive: false, address: "2G4RMDbXu79f5Yff6fBjKgXknuGvrFCr7iYmiTKy3fVc", votes: 23 },
   { name: "BRRR", symbol: "BRRR", price: "$0.042", change: 69.0, logo: "brrr.jpg", positive: true, address: "7dGEYMPsAVxJY3qQJaCHwLPkCCx9SSE52H4k1wF617uE", votes: 78 }
 ];
 
 
         // Sample data for voting candidates
         const votingCandidates = [
-            { name: "MOONSHOT", symbol: "MOON", logo: "moonshot.png", description: "Next 100x moonshot token with innovative tokenomics", votes: 0 },
-            { name: "PONZINOMICS", symbol: "PONZI", logo: "ponzinomics.png", description: "The ultimate ponzi experience with auto-compounding rewards", votes: 0 },
-            { name: "RUGPULL", symbol: "RUG", logo: "rugpull.png", description: "Honest rugpull token with transparent dev team", votes: 0 },
-            { name: "BAGHOLDER", symbol: "BAG", logo: "bagholder.png", description: "For those who love holding bags until zero", votes: 0 },
-            { name: "PUMPDUMP", symbol: "PUMP", logo: "pumpdump.png", description: "Professional pump and dump team with proven track record", votes: 0 },
-            { name: "WHALEBOT", symbol: "WHALE", logo: "whalebot.png", description: "AI-powered whale bot that frontruns your trades", votes: 0 }
+            { name: "MOONSHOT", symbol: "MOON", logo: "tokenmoonshot.png", description: "Next 100x moonshot token with innovative tokenomics", votes: 0 },
+            { name: "PONZINOMICS", symbol: "PONZI", logo: "tokenponzinomics.png", description: "The ultimate ponzi experience with auto-compounding rewards", votes: 0 },
+            { name: "RUGPULL", symbol: "RUG", logo: "tokenrugpull.png", description: "Honest rugpull token with transparent dev team", votes: 0 },
+            { name: "BAGHOLDER", symbol: "BAG", logo: "tokenbagholder.png", description: "For those who love holding bags until zero", votes: 0 },
+            { name: "PUMPDUMP", symbol: "PUMP", logo: "tokenpumpdump.png", description: "Professional pump and dump team with proven track record", votes: 0 },
+            { name: "WHALEBOT", symbol: "WHALE", logo: "tokenwhalebot.png", description: "AI-powered whale bot that frontruns your trades", votes: 0 }
         ];
+
+        // Airdrop data
+        const airdropData = {
+            total: 1000000,
+            claimed: 374618.92,
+            remaining: 625381.08,
+            progress: 37.46,
+            recipients: [
+                { address: "0x3aD9...2f7b", amount: 20000.13 },
+                { address: "0x77b2...AE91", amount: 18509.32 },
+                { address: "0x93C4...fA29", amount: 24184.09 },
+                { address: "0xF12c...0e00", amount: 17621.87 },
+                { address: "0x61e1...D554", amount: 19892.45 },
+                { address: "0x9Bc4...7A4A", amount: 22613.14 },
+                { address: "0xCd90...C38e", amount: 20927.03 },
+                { address: "0x0f17...3D1C", amount: 16788.10 },
+                { address: "0x86Ef...3E51", amount: 25921.77 },
+                { address: "0x7198...Aa02", amount: 18492.63 },
+                { address: "0xA34d...109a", amount: 13714.29 },
+                { address: "0x41Ec...4c00", amount: 14801.00 },
+                { address: "0x8EbC...76e5", amount: 15213.92 },
+                { address: "0x7F22...b312", amount: 21004.57 },
+                { address: "0x93a0...62E7", amount: 14198.41 }
+            ],
+            eligibleAddresses: [
+                "0x3aD9...2f7b",
+                "0x77b2...AE91",
+                "0x93C4...fA29",
+                "0xF12c...0e00",
+                "0x61e1...D554",
+                "0x9Bc4...7A4A",
+                "0xCd90...C38e",
+                "0x0f17...3D1C",
+                "0x86Ef...3E51",
+                "0x7198...Aa02",
+                "0xA34d...109a",
+                "0x41Ec...4c00",
+                "0x8EbC...76e5",
+                "0x7F22...b312",
+                "0x93a0...62E7"
+            ]
+        };
 
         // Track connected wallet
         let connectedWallet = null;
         let hasVoted = false;
+        let hasClaimedAirdrop = false;
 
         // Function to populate the coin table
         function populateCoinTable() {
@@ -770,11 +962,13 @@
                     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                     connectedWallet = accounts[0];
                     updateWalletConnection();
+                    updateAirdropStatus();
                     showNotification(`Connected with wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`);
                 } else if (typeof window.solana !== 'undefined') {
                     const response = await window.solana.connect();
                     connectedWallet = response.publicKey.toString();
                     updateWalletConnection();
+                    updateAirdropStatus();
                     showNotification(`Connected with wallet: ${connectedWallet.slice(0, 6)}...${connectedWallet.slice(-4)}`);
                 } else {
                     showNotification('No wallet extension detected!', false);
@@ -789,9 +983,11 @@
             const connectBtn = document.getElementById('connectWallet');
             const votingContainer = document.getElementById('votingContainer');
             const votingContent = document.getElementById('votingContent');
+            const airdropNotConnected = document.getElementById('airdropNotConnected');
+            const airdropConnected = document.getElementById('airdropConnected');
             
             if (connectedWallet) {
-                // Update connect button
+                // Update main connect button
                 connectBtn.innerHTML = `<i class="fas fa-check-circle"></i><span>Connected</span>`;
                 connectBtn.classList.remove('bg-gradient-to-r', 'from-primary', 'to-neonPurple');
                 connectBtn.classList.add('connected-btn');
@@ -800,6 +996,14 @@
                 votingContainer.classList.remove('disabled');
                 document.querySelector('#votingContainer > div').classList.add('hidden');
                 votingContent.classList.remove('hidden');
+                
+                // Update airdrop section
+                airdropNotConnected.classList.add('hidden');
+                airdropConnected.classList.remove('hidden');
+                document.getElementById('connectedWalletAddress').textContent = 
+                    connectedWallet.length > 20 ? 
+                    `${connectedWallet.slice(0, 6)}...${connectedWallet.slice(-4)}` : 
+                    connectedWallet;
                 
                 // Populate voting cards if not already done
                 if (votingContent.innerHTML === '') {
@@ -815,6 +1019,54 @@
                 votingContainer.classList.add('disabled');
                 document.querySelector('#votingContainer > div').classList.remove('hidden');
                 votingContent.classList.add('hidden');
+                
+                // Reset airdrop section
+                airdropNotConnected.classList.remove('hidden');
+                airdropConnected.classList.add('hidden');
+            }
+        }
+
+        // Function to update airdrop status
+        function updateAirdropStatus() {
+            if (!connectedWallet) return;
+
+            const airdropStatus = document.getElementById('airdropStatus');
+            const airdropEligible = document.getElementById('airdropEligible');
+            const airdropClaimed = document.getElementById('airdropClaimed');
+
+            // Simulate checking if wallet is eligible
+            const isEligible = airdropData.eligibleAddresses.some(addr => 
+                connectedWallet.includes(addr.split('...')[0]) || 
+                connectedWallet.includes(addr.split('...')[1])
+            );
+
+            // Simulate checking if already claimed
+            const hasClaimed = Math.random() > 0.7; // 30% chance to show claimed state
+
+            if (hasClaimed) {
+                airdropStatus.innerHTML = `
+                    <span class="airdrop-status claimed">
+                        <i class="fas fa-check-circle mr-2"></i> Already Claimed
+                    </span>
+                `;
+                airdropEligible.classList.add('hidden');
+                airdropClaimed.classList.remove('hidden');
+            } else if (isEligible) {
+                airdropStatus.innerHTML = `
+                    <span class="airdrop-status eligible">
+                        <i class="fas fa-check-circle mr-2"></i> Eligible
+                    </span>
+                `;
+                airdropEligible.classList.remove('hidden');
+                airdropClaimed.classList.add('hidden');
+            } else {
+                airdropStatus.innerHTML = `
+                    <span class="airdrop-status not-eligible">
+                        <i class="fas fa-times-circle mr-2"></i> Not Eligible
+                    </span>
+                `;
+                airdropEligible.classList.add('hidden');
+                airdropClaimed.classList.add('hidden');
             }
         }
 
@@ -841,6 +1093,18 @@
             showNotification(`Your vote for ${votingCandidates[candidateIndex].name} has been recorded!`);
         }
 
+        // Function to handle airdrop claim
+        function handleAirdropClaim() {
+            showNotification('Claiming your airdrop... This may take a few seconds.');
+            
+            // Simulate blockchain transaction
+            setTimeout(() => {
+                document.getElementById('airdropEligible').classList.add('hidden');
+                document.getElementById('airdropClaimed').classList.remove('hidden');
+                showNotification('Airdrop claimed successfully! 20,000 $PAR tokens have been sent to your wallet.');
+            }, 2000);
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', () => {
             populateCoinTable();
@@ -849,6 +1113,7 @@
             // Wallet connection
             document.getElementById('connectWallet').addEventListener('click', connectWallet);
             document.getElementById('connectToVote').addEventListener('click', connectWallet);
+            document.getElementById('connectForAirdrop').addEventListener('click', connectWallet);
             
             // Voting
             document.getElementById('votingContent').addEventListener('click', (e) => {
@@ -856,6 +1121,9 @@
                     handleVote(parseInt(e.target.dataset.index));
                 }
             });
+            
+            // Airdrop claim
+            document.getElementById('claimAirdropBtn').addEventListener('click', handleAirdropClaim);
             
             // Grant application modal
             const grantModal = document.getElementById('grantModal');
@@ -894,7 +1162,6 @@
             
             // Load more coins
             document.getElementById('loadMore').addEventListener('click', () => {
-                // In a real app, this would fetch more data from an API
                 showNotification('Loading more coins...');
             });
             
